@@ -5,8 +5,8 @@
 #
 
 # @lc code=start
+from functools import cmp_to_key
 from typing import List
-
 
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:

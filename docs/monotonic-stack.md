@@ -209,3 +209,81 @@ while stack and height[stack[-1]] < h:
 题目问"最大矩形/最多水"  → 模式 A（弹出时算），递增栈
 题目问"字典序/去重复"    → 模式 A + 额外条件
 ```
+
+---
+
+## 九、最小字典序双雄：402 移掉 K 位数字 vs 316 去除重复字母
+
+两题同源：**用单调栈保序删字符，求最小字典序结果**。但约束不同，弹栈条件、结尾处理各不相同，放一起对比能彻底吃透。
+
+### 共同骨架
+
+```
+遍历字符 c:
+    while 弹栈条件: pop()
+    append(c)
+结尾处理
+```
+
+贪心直觉一样：**栈顶比当前字符大且还删得起 → 弹掉**。高位（栈底）越早变小，字典序越占便宜。
+
+### 402：恰好删 k 个
+
+```python
+def removeKdigits(self, num: str, k: int) -> str:
+    stack = []
+    for c in num:
+        while k > 0 and stack and stack[-1] > c:
+            stack.pop()
+            k -= 1
+        stack.append(c)
+    while k > 0:                 # 还能删：栈单调不减，末尾最大
+        stack.pop()
+        k -= 1
+    ans = ''.join(stack).lstrip('0')
+    return ans or '0'
+```
+
+- **弹栈条件**：`k > 0`（还有删除额度）；
+- **去重**：无——数字重复出现是合法的；
+- **结尾**：k 没花完时从**末尾**删（此时栈单调不减，越靠右越大）；
+- **前导零**：`lstrip('0')`，全删光返回 `"0"`。
+
+### 316：每个字符恰好一次
+
+```python
+def removeDuplicateLetters(self, s: str) -> str:
+    cnt = Counter(s)
+    instack = set()
+    stack = []
+    for c in s:
+        if c in instack:
+            cnt[c] -= 1          # 重复出现只留第一次
+            continue
+        while stack and stack[-1] > c and cnt[stack[-1]] > 0:
+            instack.discard(stack.pop())
+        stack.append(c)
+        instack.add(c)
+        cnt[c] -= 1
+    return "".join(stack)
+```
+
+- **弹栈条件**：`cnt[栈顶] > 0`（它后面还会出现，弹出后能补回来）；
+- **去重**：`instack` 保证每个字符只入栈一次；
+- **结尾**：无需处理——弹栈条件 `cnt > 0` 保证每个字符至少剩一次；
+- **前导零**：无此概念。
+
+### 对比表
+
+| | 402 | 316 |
+|---|---|---|
+| 目标 | 删 k 个字符，数字最小 | 每字符恰好一次，字典序最小 |
+| 数量约束 | **恰好 k 个** | **每个字符 1 次** |
+| 弹栈的「额度」 | `k > 0` | `cnt[栈顶] > 0` |
+| 去重 | 不需要 | `instack` + 遇重 `cnt -= 1` |
+| 结尾处理 | 剩余 k 从末尾删 | 不需要 |
+| 特殊输出 | 去前导零，空则 `"0"` | 直接拼接 |
+
+### 一句话本质
+
+> 两题都是「**最小字典序的保序筛选**」：402 的预算按**个数**计（k），316 的预算按**出现次数**计（cnt）。预算花在哪？都花在「弹掉比当前大的栈顶」上——区别只在于怎么判断「还弹得起」。

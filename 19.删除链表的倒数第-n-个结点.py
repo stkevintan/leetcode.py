@@ -16,5 +16,17 @@ from typing import Optional
 
 class Solution:
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        dummy = ListNode(0, head)
+        slow = dummy
+        fast = dummy
+        for _ in range(n):
+            fast = fast.next
+        fast = fast.next
+        while slow and fast:
+            slow = slow.next
+            fast = fast.next
+        d = slow.next
+        slow.next = d.next
+        return dummy.next
         
 # @lc code=end

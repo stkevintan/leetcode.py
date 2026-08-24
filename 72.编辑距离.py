@@ -21,6 +21,10 @@ class Solution:
                 if word1[i - 1] == word2[j - 1]:
                     dp[i][j] = dp[i - 1][j - 1]
                 else:
+                    # 对于删除的理解关键是 dp[i][j] 并不代表着 word1[i] 和 word2[j] 不能被编辑。 
+                    # dp[i][j - 1]: 添加
+                    # dp[i - 1][j]: 删除 (删除word1 的最后一个单词，然后问题转移成 dp[i-1][j])
+                    # dp[i-1][j-1]: 修改
                     dp[i][j] = min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]) + 1
         return dp[n][m]
 # @lc code=end

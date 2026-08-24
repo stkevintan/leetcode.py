@@ -21,6 +21,6 @@ class Solution:
                 cur = interval
         ans.append(cur)
         return ans
-        
+
 # @lc code=end
 

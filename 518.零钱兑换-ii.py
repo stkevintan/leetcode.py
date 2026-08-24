@@ -1,0 +1,22 @@
+#
+# @lc app=leetcode.cn id=518 lang=python3
+#
+# [518] 零钱兑换 II
+#
+
+# @lc code=start
+from typing import List
+
+
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        dp = [0] * (amount + 1)
+        dp[0] = 1
+        for i, coin in enumerate(coins):
+            for j in range(coin, amount + 1):
+                dp[j] = dp[j] + dp[j - coin]
+        return dp[amount]
+        
+        
+# @lc code=end
+

@@ -74,10 +74,14 @@
 | 139 | 单词拆分 | `dp[i] = dp[j] and s[j:i] in dict` |
 | 152 | 乘积最大子数组 | 同时维护 max 和 min |
 | 198 | 打家劫舍 | `dp[i] = max(dp[i-1], dp[i-2]+nums[i])` |
+| 264 | 丑数 II | 三指针合并：`dp[i] = min(dp[p2]*2, dp[p3]*3, dp[p5]*5)` |
 | 279 | 完全平方数 | `dp[i] = min(dp[i-k²]+1)` 或数学 |
 | 📄 300 | 最长递增子序列 | tails 数组 + 二分 [→ 文章](patience-sorting.md) |
 | 322 | 零钱兑换 | 完全背包 `dp[j] = min(dp[j], dp[j-coin]+1)` |
+| 377 | 组合总和 IV | 完全背包求排列数（金额外层） [→ 文章](knapsack-loop-order.md) |
 | 416 | 分割等和子集 | 01 背包 |
+| 518 | 零钱兑换 II | 完全背包求组合数（硬币外层） [→ 文章](knapsack-loop-order.md) |
+| 799 | 香槟塔 | 逐层模拟溢出 + 滚动数组 [→ 回顾](review-list.md) |
 | 1143 | 最长公共子序列 | `dp[i][j] = dp[i-1][j-1]+1 or max(上,左)` |
 
 ---
@@ -146,6 +150,7 @@
 |:---:|------|------|
 | 20 | 有效的括号 | 栈匹配 |
 | 155 | 最小栈 | 双栈 / 存差值 |
+| 316 | 去除重复字母 | 单调栈 + 剩余计数 [→ 回顾](review-list.md) |
 | 394 | 字符串解码 | 栈保存上下文 |
 
 > 单调栈专题见 [→ monotonic-stack.md](monotonic-stack.md)
@@ -168,6 +173,7 @@
 |:---:|------|------|
 | 207 | 课程表 | 拓扑排序 / BFS 入度 |
 | 994 | 腐烂的橘子 | 多源 BFS |
+| 1368 | 使网格图至少有一条有效路径的最小代价 | 0-1 BFS [→ 文章](shortest-path.md) |
 
 ---
 
@@ -187,6 +193,7 @@
 | 45 | 跳跃游戏 II | 当前步最远 + 下一步最远 |
 | 55 | 跳跃游戏 | 维护最远可达 |
 | 📄 169 | 多数元素 | Boyer-Moore 投票 [→ 文章](boyer-moore-vote.md) |
+| 678 | 有效的括号字符串 | min/max 净括号数贪心 [→ 回顾](review-list.md) |
 
 ---
 
@@ -217,7 +224,9 @@
 | [荷兰国旗问题](dutch-national-flag.md) | 75 |
 | [下一个排列](next-permutation.md) | 31 |
 | [耐心排序 / LIS O(n log n)](patience-sorting.md) | 300, 354 |
+| [背包循环顺序：组合 vs 排列](knapsack-loop-order.md) | 518, 377, 322, 416 |
 | [Floyd 判圈证明](floyd-cycle-proof.md) | 141, 142, 287 |
 | [Manacher O(n) 回文](manacher.md) | 5 |
 | [DFS 回溯技巧](dfs-tricks.md) | 17, 22, 39, 46, 47, 51, 78, 79, 131 |
+| [最短路：0-1 BFS / Dijkstra / SPFA](shortest-path.md) | 1368, 1293, 743, 1514 |
 | [Python CheatSheet](python-cheatsheet.md) | 通用 |
