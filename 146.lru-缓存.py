@@ -5,12 +5,15 @@
 #
 
 # @lc code=start
+from dataclasses import dataclass
+
+
+@dataclass
 class LinkedListNode:
-    def __init__(self, key, val, prev = None, next = None):
-        self.key = key
-        self.val = val
-        self.prev = prev
-        self.next = next
+    key: int
+    val: int
+    prev: LinkedListNode | None = None
+    next: LinkedListNode | None = None
 
 class LinkedList:
     def __init__(self):
@@ -32,8 +35,9 @@ class LinkedList:
         self.remove(node)
         return node
 
-    def append(self, node):
+    def append(self, node: LinkedListNode):
         prev = self.end.prev
+        assert prev is not None
         prev.next = node
         node.prev = prev
 
@@ -69,7 +73,8 @@ class LRUCache:
             return
         if len(self.map) == self.capacity:
             node = self.linked.pop()
-            del self.map[node.key]
+            if node:
+                del self.map[node.key]
         node = LinkedListNode(key, value)
         self.map[key] = node
         self.linked.append(node)
